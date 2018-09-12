@@ -1,0 +1,13 @@
+#titulo {
+    text-align: center;
+}
+th, td {
+    text-align: center;
+}
+span {
+    font-weight: bold;
+}
+
+#btnModalNovo {
+    width: 100%;
+}
