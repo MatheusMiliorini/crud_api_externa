@@ -33,8 +33,6 @@ $(document).ready(function() {
             "phone": phone,
         });
 
-        console.log(json_data);
-
         $.ajax({
             type: "POST",
             url:"http://serene-chamber-53332.herokuapp.com/api/pessoa",
@@ -45,6 +43,26 @@ $(document).ready(function() {
             },
             error: function() {
                 alert("Erro ao inserir!");
+            }
+        });
+    });
+
+    $("#btnConfirmarAlter").click(function() {
+        $.ajax({
+            url: "http://serene-chamber-53332.herokuapp.com/api/pessoa/" + idClicado,
+            type: "PATCH",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "id":idClicado,
+                "name":$("#alterNome").val(),
+                "mail":$("#alterEmail").val(),
+                "phone":$("#alterPhone").val() 
+            }),
+            success: function(data) {
+                alert("Alterado com sucesso!");
+            },
+            error: function() {
+                alert("Erro ao alterar!");
             }
         });
     });
@@ -67,7 +85,19 @@ function preencherUsuarios() {
                     $("#nomeItem").html(nomeClicado);
                     $("#modalExcluir").modal();
                 }));
-            tabela.append('<td><i class="alterar fas fa-pencil-alt"></i></td>');
+            tabela.append($('<td><i class="alterar fas fa-pencil-alt"></i></td>')
+                .click(function() {
+                    idClicado = val.id;
+                    nomeClicado = val.name;
+                    emailClicado = val.mail;
+                    phoneClicado = val.phone;
+
+                    $("#alterID").val(idClicado);
+                    $("#alterNome").val(nomeClicado);
+                    $("#alterEmail").val(emailClicado);
+                    $("#alterPhone").val(phoneClicado);
+                    $("#modalAlter").modal();
+                }));
             tabela.append("</tr>");
         });
     });
